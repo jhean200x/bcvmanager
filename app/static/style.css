@@ -1,0 +1,156 @@
+/*
+ * Estilos para BCV-Manager
+ * Archivo: style.css
+ */
+
+/* ============================
+ * 1. Configuración Global
+ * ============================ */
+
+body {
+    font-family: 'Inter', sans-serif; /* Fuente recomendada */
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4; /* Fondo suave */
+    color: #333;
+    min-height: 100vh;
+}
+
+/* ============================
+ * 2. Header y Botón
+ * ============================ */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 0 10px;
+}
+
+.header h1 {
+    font-size: 1.8rem;
+    color: #007bff;
+}
+
+.btn-actualizar {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s, transform 0.1s, opacity 0.2s;
+}
+
+.btn-actualizar:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+.btn-actualizar:active {
+    background-color: #004085;
+    transform: translateY(0);
+}
+
+/* Estilo para el botón deshabilitado (cuando está 'Cargando...') */
+.btn-actualizar:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+    background-color: #999; /* Color gris para indicar inactividad */
+}
+
+
+/* ============================
+ * 3. Contenedor de Monedas
+ * ============================ */
+
+.monedas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.moneda { 
+    /* Diseño de la caja individual */
+    background-color: white; 
+    border-radius: 12px; 
+    padding: 20px; 
+    text-align: center; 
+    
+    /* Responsive Flex: Mínimo 150px de ancho */
+    flex: 1 1 150px; 
+    
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: box-shadow 0.3s;
+}
+
+.moneda:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Icono ($, €, ¥, etc.) */
+.moneda span {
+    display: block;
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+    color: #007bff;
+    line-height: 1; /* Para centrar mejor el símbolo */
+}
+
+/* Nombre de la moneda (Dólar, Euro, etc.) */
+.moneda p {
+    margin: 0 0 5px 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Valor de la tasa */
+.moneda strong { 
+    display: block; 
+    font-size: 1.8rem; /* Tamaño un poco más grande */
+    color: #333; /* Color oscuro */
+    margin-top: 5px; 
+    font-weight: 700;
+}
+
+/* ============================
+ * 4. Animación y Responsive
+ * ============================ */
+
+/* Estilo sutil para el efecto visual al actualizar (pulso de sombra azul) */
+.moneda.actualizado {
+    /* Hacemos que la caja tenga una sombra sutil y rápida para indicar la actualización */
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.7); 
+    transition: box-shadow 0.2s ease-out; 
+}
+
+/* Media Query para móvil */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 20px;
+        gap: 10px;
+    }
+    .monedas {
+        gap: 10px;
+    }
+    .moneda {
+        /* Asegura que en móvil se muestren 1 o 2 por fila, pero se estiren bien */
+        flex: 1 1 45%; 
+        padding: 15px;
+    }
+    .moneda strong {
+        font-size: 1.5rem;
+    }
+}
