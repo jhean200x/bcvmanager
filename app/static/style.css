@@ -1,156 +1,257 @@
-/*
- * Estilos para BCV-Manager
- * Archivo: style.css
- */
+/* Asegura que la fila de promedio tenga el mismo ancho y separación que las demás */
+.monedas-promedio {
+	margin-bottom: 0.5rem;
+}
+.monedas-promedio {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2rem;
+	justify-content: center;
+	width: 100%;
+	max-width: 1100px;
+	margin: 0 auto 0.5rem auto;
+}
+.monedas-promedio .moneda#promedio {
+	width: 100%;
+	min-width: 0;
+	max-width: 1100px;
+	flex: 1 1 100%;
+	margin-bottom: 0;
+	box-sizing: border-box;
+}
+@media (max-width: 900px) {
+	.monedas-promedio {
+		gap: 1.2rem;
+	}
+	.monedas-promedio .moneda#promedio {
+		width: 100%;
+		max-width: 98vw;
+		padding: 1.2rem 0.7rem 1rem 0.7rem;
+	}
+}
+@media (max-width: 600px) {
+	.monedas-promedio {
+		flex-direction: column;
+		align-items: center;
+		gap: 0.7rem;
+	}
+	.monedas-promedio .moneda#promedio {
+		width: 98vw;
+		max-width: 98vw;
+		margin-bottom: 1rem;
+	}
+}
+.moneda#promedio {
+	width: 100vw !important;
+	min-width: 320px;
+	max-width: 700px;
+	margin: 0 auto 2.5rem auto;
+	border-color: #bfa243;
+	background: linear-gradient(120deg, #181c35 0%, #23263a 60%, #228 100%);
+	color: #fff;
+	box-shadow: 0 4px 32px 0 #bfa24355;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	font-size: 1.2em;
+	padding: 2rem 1.5rem 1.5rem 1.5rem;
+	border-radius: 1.2rem;
+	position: relative;
+	overflow: hidden;
+}
+.moneda#promedio span, .moneda#promedio strong {
+	color: #bfa243;
+	text-shadow: 1px 1px 8px #3a321a;
+}
+.moneda#promedio p {
+	color: #e6e6e6;
+}
 
-/* ============================
- * 1. Configuración Global
- * ============================ */
+@media (max-width: 900px) {
+	.moneda#promedio {
+		font-size: 1em;
+		padding: 1.2rem 0.7rem 1rem 0.7rem;
+		gap: 0.5rem;
+		max-width: 98vw;
+	}
+}
+@media (max-width: 600px) {
+	.moneda#promedio {
+		font-size: 0.95em;
+		padding: 1rem 0.3rem 0.7rem 0.3rem;
+		gap: 0.3rem;
+		max-width: 99vw;
+	}
+}
 
 body {
-    font-family: 'Inter', sans-serif; /* Fuente recomendada */
-    margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4; /* Fondo suave */
-    color: #333;
-    min-height: 100vh;
+	background: #181c24;
+	min-height: 100vh;
+	margin: 0;
+	font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+	color: #f3f3f3;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	padding: 0;
+	box-sizing: border-box;
 }
-
-/* ============================
- * 2. Header y Botón
- * ============================ */
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    padding: 0 10px;
+	width: 100%;
+	padding: 2.5rem 0 1.5rem 0;
+	text-align: center;
+	background: #20232b;
+	box-shadow: 0 2px 16px 0 #10121a99;
+	margin-bottom: 2.5rem;
+	border-bottom: 1px solid #23263a;
 }
 
-.header h1 {
-    font-size: 1.8rem;
-    color: #007bff;
+.titulo-principal {
+	font-size: 2.5rem;
+	letter-spacing: 1px;
+	color: #f3f3f3;
+	font-weight: 700;
+	margin: 0;
 }
-
-.btn-actualizar {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.2s, transform 0.1s, opacity 0.2s;
-}
-
-.btn-actualizar:hover {
-    background-color: #0056b3;
-    transform: translateY(-1px);
-}
-
-.btn-actualizar:active {
-    background-color: #004085;
-    transform: translateY(0);
-}
-
-/* Estilo para el botón deshabilitado (cuando está 'Cargando...') */
-.btn-actualizar:disabled {
-    cursor: not-allowed;
-    opacity: 0.7;
-    background-color: #999; /* Color gris para indicar inactividad */
-}
-
-
-/* ============================
- * 3. Contenedor de Monedas
- * ============================ */
 
 .monedas {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    max-width: 1200px;
-    margin: 0 auto;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2rem;
+	justify-content: center;
+	width: 100%;
+	max-width: 1100px;
+	margin: 0 auto;
 }
 
-.moneda { 
-    /* Diseño de la caja individual */
-    background-color: white; 
-    border-radius: 12px; 
-    padding: 20px; 
-    text-align: center; 
-    
-    /* Responsive Flex: Mínimo 150px de ancho */
-    flex: 1 1 150px; 
-    
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-    transition: box-shadow 0.3s;
+.moneda {
+	background: #23263a;
+	border-radius: 1.2rem;
+	box-shadow: 0 2px 16px 0 #10121a99;
+	border: 1px solid #23263a;
+	padding: 2rem 1.5rem 1.5rem 1.5rem;
+	min-width: 160px;
+	max-width: 220px;
+	flex: 1 1 200px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	transition: transform 0.18s, box-shadow 0.18s;
+	position: relative;
+	overflow: hidden;
+	margin-bottom: 1.5rem;
 }
 
 .moneda:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+	transform: translateY(-8px) scale(1.03);
+	box-shadow: 0 8px 32px 0 #2d314d99;
+	z-index: 2;
 }
 
-/* Icono ($, €, ¥, etc.) */
 .moneda span {
-    display: block;
-    font-size: 2.5rem;
-    margin-bottom: 5px;
-    color: #007bff;
-    line-height: 1; /* Para centrar mejor el símbolo */
+	font-size: 2.9rem;
+	margin-bottom: 0.5rem;
+	font-weight: 600;
 }
 
-/* Nombre de la moneda (Dólar, Euro, etc.) */
 .moneda p {
-    margin: 0 0 5px 0;
-    font-size: 0.9rem;
-    color: #666;
+	font-size: 1.9rem;
+	margin: 0.2rem 0 0.5rem 0;
+	color: #b3b3c9;
+	letter-spacing: 0.5px;
+	font-weight: 500;
 }
 
-/* Valor de la tasa */
-.moneda strong { 
-    display: block; 
-    font-size: 1.8rem; /* Tamaño un poco más grande */
-    color: #333; /* Color oscuro */
-    margin-top: 5px; 
-    font-weight: 700;
+.moneda strong {
+	font-size: 2.8rem;
+	color: #f3f3f3;
+	margin-top: 0.5rem;
+	font-weight: 700;
+	letter-spacing: 0.5px;
+	transition: color 0.2s;
 }
 
-/* ============================
- * 4. Animación y Responsive
- * ============================ */
-
-/* Estilo sutil para el efecto visual al actualizar (pulso de sombra azul) */
-.moneda.actualizado {
-    /* Hacemos que la caja tenga una sombra sutil y rápida para indicar la actualización */
-    box-shadow: 0 0 15px rgba(0, 123, 255, 0.7); 
-    transition: box-shadow 0.2s ease-out; 
+.moneda#promedio {
+	border-color: #ffd700;
+    width: 100%;
+}
+.moneda#promedio span, .moneda#promedio strong {
+    color: #ffd700;
+    /* text-shadow: 1px 1px 9px #eee600; */
 }
 
-/* Media Query para móvil */
+.moneda#dolar {
+	border-color: #2ec4b6;
+}
+.moneda#dolar span, .moneda#dolar strong {
+	color: #2ec4b6;
+}
+
+.moneda#euro {
+	border-color: #4361ee;
+}
+.moneda#euro span, .moneda#euro strong {
+	color: #4361ee;
+}
+
+.moneda#yuan {
+	border-color: #ffbe0b;
+}
+.moneda#yuan span, .moneda#yuan strong {
+	color: #ffbe0b;
+}
+
+.moneda#libra {
+	border-color: #f15bb5;
+}
+.moneda#libra span, .moneda#libra strong {
+	color: #f15bb5;
+}
+
+.moneda#rublo {
+	border-color: #ff6f59;
+}
+.moneda#rublo span, .moneda#rublo strong {
+	color: #ff6f59;
+}
+
+.moneda.usdt {
+	border-color: #5fff5f99;
+}
+.moneda.usdt span, .moneda.usdt strong {
+	color: #5fff5f99;
+}
+
+@media (max-width: 900px) {
+	.monedas {
+		gap: 1.2rem;
+	}
+	.moneda {
+		min-width: 140px;
+		padding: 1.2rem 0.7rem 1rem 0.7rem;
+	}
+}
+
 @media (max-width: 600px) {
-    body {
-        padding: 10px;
-    }
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-        margin-bottom: 20px;
-        gap: 10px;
-    }
-    .monedas {
-        gap: 10px;
-    }
-    .moneda {
-        /* Asegura que en móvil se muestren 1 o 2 por fila, pero se estiren bien */
-        flex: 1 1 45%; 
-        padding: 15px;
-    }
-    .moneda strong {
-        font-size: 1.5rem;
-    }
+	.header {
+		padding: 1.2rem 0 0.7rem 0;
+	}
+	.titulo-principal {
+		font-size: 1.5rem;
+	}
+	.monedas {
+		flex-direction: column;
+		align-items: center;
+		gap: 0.7rem;
+	}
+	.moneda {
+		width: 90vw;
+		min-width: unset;
+		max-width: unset;
+		margin-bottom: 1rem;
+	}
 }

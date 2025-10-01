@@ -3,19 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BCV-Manager</title>
+    <title>Tasa de Cambio</title>
     <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+    <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
     
     <div class="header">
-        <h1>BCV-Manager</h1>
-        <button id="btnActualizar" class="btn-actualizar">
-            <span id="iconoActualizar">🔄 Actualizar</span>
-        </button>
+        <h1 class="titulo-principal">Tasa de Cambio</h1>
     </div>
     
+    
     <div class="monedas">
+        <div class="monedas monedas-promedio">
+            <div class="moneda" id="promedio">
+                <span>$/₮</span>
+                <p>Promedio</p>
+                <strong data-currency="USD">{{ rates.PROMEDIO | default('N/A') }}</strong>
+            </div>
+        </div>
+
         <div class="moneda" id="dolar">
             <span>$</span>
             <p>Dólar</p>
@@ -35,8 +42,8 @@
         </div>
         
         <div class="moneda" id="libra">
-            <span>£</span>
-            <p>Libra</p>
+            <span>₺</span>
+            <p>Lira</p>
             <strong data-currency="TRY">{{ rates.TRY | default('N/A') }}</strong>
         </div>
         
@@ -45,83 +52,34 @@
             <p>Rublo</p>
             <strong data-currency="RUB">{{ rates.RUB | default('N/A') }}</strong>
         </div>
+
+        <div class="moneda usdt" id="usdt">
+            <span>₮</span>
+            <p>USDT</p>
+            <strong data-currency="USDT" id="usdt-valor">Cargando...</strong>
+        </div>
     </div>
 
     <!-- SCRIPT DE FUNCIONALIDAD -->
     <script>
-        // Función para mostrar mensajes sin usar alert()
-        function mostrarMensaje(texto) {
-            console.error(texto);
-            const header = document.querySelector('.header');
-            let mensajeDiv = document.getElementById('mensajeAlerta');
-
-            if (!mensajeDiv) {
-                mensajeDiv = document.createElement('div');
-                mensajeDiv.id = 'mensajeAlerta';
-                mensajeDiv.style.cssText = 'padding: 10px; background-color: #f44336; color: white; margin-top: 10px; border-radius: 5px; opacity: 0; transition: opacity 0.5s;';
-                header.after(mensajeDiv);
-            }
-
-            mensajeDiv.textContent = texto;
-            mensajeDiv.style.opacity = '1';
-
-            // Ocultar después de 4 segundos
-            setTimeout(() => {
-                mensajeDiv.style.opacity = '0';
-            }, 4000);
-        }
-
-        document.getElementById('btnActualizar').addEventListener('click', function() {
-            const iconSpan = document.getElementById('iconoActualizar');
-            
-            // 1. INICIAR CARGA Y ANIMACIÓN
-            iconSpan.classList.add('cargando');
-
-            // 2. HACER LA PETICIÓN A FASTAPI
-            // La URL ahora es /api/tasas
-            fetch('/api/tasas') 
-                .then(response => {
-                    if (!response.ok) {
-                        // Lanza un error si el estado HTTP no es 200 (ej: 500)
-                        throw new Error(`Error HTTP: ${response.status}`);
-                    }
-                    return response.json();
-                })
+        // Al cargar la página, pedir el valor USDT normalmente
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/usdt')
+                .then(response => response.json())
                 .then(data => {
-                    // 3. ACTUALIZAR LA INTERFAZ
-                    actualizarInterfaz(data);
-                    mostrarMensaje('¡Tasas actualizadas con éxito!');
+                    const usdtStrong = document.getElementById('usdt-valor');
+                    if (data.usdt) {
+                        usdtStrong.textContent = data.usdt;
+                    } else {
+                        usdtStrong.textContent = 'N/A';
+                    }
                 })
-                .catch(error => {
-                    // 4. MANEJO DE ERRORES (Muestra el error sin usar alert)
-                    mostrarMensaje('❌ No se pudieron actualizar las tasas. Intente de nuevo. Detalles: ' + error.message);
-                })
-                .finally(() => {
-                    // 5. DETENER CARGA Y ANIMACIÓN
-                    iconSpan.classList.remove('cargando');
+                .catch(() => {
+                    const usdtStrong = document.getElementById('usdt-valor');
+                    usdtStrong.textContent = 'N/A';
                 });
         });
-
-        function actualizarInterfaz(rates) {
-            // Recorre todos los elementos <strong> con el atributo data-currency
-            document.querySelectorAll('.moneda strong').forEach(strongElement => {
-                const currencyCode = strongElement.getAttribute('data-currency');
-                
-                // Si la tasa existe en los datos recibidos, la actualiza
-                if (currencyCode && rates[currencyCode]) {
-                    strongElement.textContent = rates[currencyCode];
-                    
-                    // Efecto visual: añade y quita la clase 'actualizado'
-                    const divMoneda = strongElement.closest('.moneda');
-                    if (divMoneda) {
-                        divMoneda.classList.add('actualizado');
-                        setTimeout(() => {
-                            divMoneda.classList.remove('actualizado');
-                        }, 500); 
-                    }
-                }
-            });
-        }
+        // ...
     </script>
 </body>
 </html>
